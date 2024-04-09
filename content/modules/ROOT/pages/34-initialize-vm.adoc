@@ -1,0 +1,62 @@
+
+# Red Hat Service Interconnect on Virtual Machine
+
+We'll be using the CLI to initialize Red Hat Service Interconnect on the VM.
+
+## 1. Deploying Red Hat Service Interconnect on VM
+
+. Go to the terminal on the devspaces where you are logged in to the VM.
++
+image::rhsi-vm-terminal.png[rhsi-vm-terminal]
+
+. Install the Red Hat Service Interconnect CLI
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+curl https://skupper.io/install.sh | sh
+----
+
+. Switch the skupper cli podman site mode as we will be using podman to run our skupper containers
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+export SKUPPER_PLATFORM=podman
+----
+
+. Confirm the same the running the below command. The output should say *podman*
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+skupper switch
+----
+
+. Initialize the Service Interconnect Router by issuing the below command in the VM terminal.
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+skupper init --ingress none --site-name vm
+----
++
+Output
++
+[source,sh,subs=attributes+]
+----
+Skupper is now installed for user 'lab-user'.  Use 'skupper status' to get more information.
+----
+
+. To see the status of the skupper network
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+skupper status
+----
++
+Output
++
+[source,sh,subs=attributes+]
+----
+Skupper is enabled for "lab-user" with site name "bastion.{guid}.internal-lab-user-{guid}". It is not connected to any other sites. It has no exposed services.
+----
++
+This confirms that we have not yet established the connection between the sites.
+

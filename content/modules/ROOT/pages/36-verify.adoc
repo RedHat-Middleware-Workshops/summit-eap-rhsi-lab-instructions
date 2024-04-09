@@ -1,0 +1,14 @@
+
+# Verify the Service Interconnect network
+
+At this point you can verify that the service network is actually working as expected.
+
+## 1. Test SOAP request
+
+. Make sure you are on the OCP terminal
++
+image::rhsi-ocp-terminal.png[rhsi-ocp-terminal]
+
+
+
+Congratulations! You built a secure service network between services on two different environments and allowed applications to connect and communicate over the secure network using Red Hat Service Interconnect. 

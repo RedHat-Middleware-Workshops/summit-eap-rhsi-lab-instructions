@@ -1,0 +1,12 @@
+
+# Deployment overview
+
+A PostgreSQL database is required for the EAP application
+
+Due to some internal dependencies, the database cannot be moved on to the OpenShift cluster until a later phase, so we will use Red Hat Service Interconnect to establish a connection between our new application running on OpenShift and the database running on the existing on-prem Virtual Machine. The goal of our exercise it to make this database accessible from the OpenShift cluster, without exposing it to the public internet and not using any complex VPNs or firewalls. We will do this by establishing a Layer 7 connectivity between the database running on a virtual machine and an OpenShift namespace using https://developers.redhat.com/products/service-interconnect/overview[Red Hat Service Interconnect.^]
+
+As shown in the image below after establishing the connectivity using Red Hat Service Interconnect, it creates a virtual local service on the OpenShift cluster for the database and redirects all the traffic to the database running on the Virtual Machine. The connection between the two Service Interconnect routers is mTLS encrypted
+
+image::rhsi-overview.png[rhsi-overview]
+
+There are multiple ways to setup layer 7 connectivity using Red Hat Service interconnect. You can either use the CLI or the OpenShift Operator. In this section we'll be using the operator to setup connectivity on the OpenShift end and the CLI to setup the connectivity on the VM side.

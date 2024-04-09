@@ -1,0 +1,1 @@
+Congratulations! You've now built a secure service network between two different environments(OpenShift and VM) and made the PostgeSQL database accessible over the secure network using Red Hat Service Interconnect. 

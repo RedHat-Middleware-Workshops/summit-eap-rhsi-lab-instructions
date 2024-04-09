@@ -1,0 +1,303 @@
+= Deploying the JBoss EAP 8.0 application to OpenShift
+
+JBoss EAP 8.0 introduced changes to the provisioning and configuration of JBoss EAP application images on Red Hat OpenShift. The process adopted the JBoss EAP Maven plugin, which provides significant improvements that make configuring JBoss EAP on OpenShift easier and more flexible.
+
+When building a JBoss EAP 7.x image for OpenShift, the OpenShift builder image provisioned the JBoss EAP server instance. The configuration was provided by a combination of runtime variables, configuration snippets, and JBoss CLI scripts.
+
+With JBoss EAP 8.0 , the JBoss EAP Maven plugin provisions the server and deploys the packaged application during the Maven execution. All the configuration for this build process is maintained in the Maven pom.xml file. This allows developers and operations teams to control and test their EAP deployments in their local environments, which provides significant benefits.
+
+The JBoss EAP Maven plugin uses https://github.com/wildfly/galleon#overview[Galleon^] to provision a JBoss EAP server configured with the minimum set of features to support the deployed application. Galleon is a provisioning tool for working with Maven repositories. Galleon automatically retrieves released JBoss EAP Maven artifacts to compose a software distribution of a JBoss EAP-based application server according to a user's configuration.
+
+To build and deploy this application on OpenShift, the only change we need to make is to the Maven pom.xml file. This involves adding the eap-maven-plugin, which takes care of all the provisioning and configuration required to build an instance of JBoss EAP 8.0 to run our application.
+
+
+In the IDE, open the file: coolstore-eap8/src/main/webapp/keycloak.json and ensure the contents are as follows:
+
+[source,json,role="copypaste"]
+----
+{
+  "realm": "eap",
+  "auth-server-url": "https://rhbk-rhbk.{{ ROUTE_SUBDOMAIN }}/",
+  "ssl-required": "external",
+  "resource": "eap-app",
+  "public-client": true,
+  "confidential-port": 0
+}
+----
+
+*Step 4.1:* Next step is to add the Red Hat plugin repositories for Red Hat GA software. Open the file `coolstore-eap8/pom.xml` and add this after the repositories tag.
+
+[source,xml,role="copypaste"]
+----
+   <pluginRepositories>
+        <!-- keep this repository the first -->
+        <pluginRepository>
+            <id>jboss-public-maven-repository</id>
+            <name>JBoss Public Maven Repository</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>redhat-ga-maven-repository</id>
+            <name>Red Hat GA Maven Repository</name>
+            <url>https://maven.repository.redhat.com/ga/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+----
+
+*Step 4.2:* Also in the pom.xml file and add the following before the closing tag inside the existing <profiles> block:
+
+[source,xml,role="copypaste"]
+----
+
+    <profile>
+        <id>openshift</id>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.jboss.eap.plugins</groupId>
+                    <artifactId>eap-maven-plugin</artifactId>
+                    <version>1.0.0.Final-redhat-00014</version>
+                    <configuration>
+                        <channels>
+                            <channel>
+                                <manifest>
+                                    <groupId>org.jboss.eap.channels</groupId>
+                                    <artifactId>eap-8.0</artifactId>
+                                </manifest>
+                            </channel>
+                        </channels>
+                        <feature-packs>
+                            <feature-pack>
+                                <location>org.jboss.eap:wildfly-ee-galleon-pack</location>
+                            </feature-pack>
+                            <feature-pack>
+                                <location>org.jboss.eap.cloud:eap-cloud-galleon-pack</location>
+                            </feature-pack>
+                            <feature-pack>
+                                <location>org.jboss.eap:eap-datasources-galleon-pack</location>
+                            </feature-pack>
+                        </feature-packs>
+                        <layers>
+                            <layer>cloud-server</layer>
+                            <layer>postgresql-datasource</layer>
+                            <layer>ejb</layer>
+                            <layer>web-clustering</layer>
+                        </layers>
+                        <filename>ROOT.war</filename>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>package</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+
+----
+
+If we examine the pom.xml snippet, we can see the inclusion of three feature packs:
+
+* https://github.com/jbossas/eap-cloud-galleon-pack/blob/main/doc/index.md[wildfly-ee-galleon-pack^]: The wildfly-ee-galleon-pack contains the features required to build an instance of JBoss EAP. This feature pack contains several layers (e.g., jaxrs-server and cloud-server).
+* https://github.com/jbossas/eap-cloud-galleon-pack/blob/main/doc/index.md[eap-cloud-galleon-pack^]: The org.jboss.eap.cloud:eap-cloud-galleon-pack Galleon feature-pack provisions a set of additional features allowing you to configure an
+EAP server to run on the cloud. The main features are as follows:
+** Server startup scripts: When starting an EAP server that was provisioned by the cloud feature-pack, a set of bash scripts are executed in order to adjust the server configuration. These scripts configure a range of server functions such as clustering, security, logging, messaging, tracing, and config management. Read more on this.
+** Adjustment of WildFly Galleon layers to tune for deployment on OpenShift, for example, disabling the management console. Read more on this.
+** Automatic provisioning of the health subsystem allows for server state monitoring and provides liveness and readiness probes.
+** Automatic routing of server logs to the console to ensure they are visible in the pod logs in the OpenShift console.
+* https://github.com/jbossas/eap-datasources-galleon-pack[eap-datasources-galleon-pack^]: This feature pack for JBoss EAP and JBoss EAP Expansion Pack provides JDBC drivers and data sources for the following databases:
+** Microsoft SQL Server
+** Oracle
+** PostgreSQL
+
+We can also see the inclusion of four layers in our pom.xml file snippet:
+
+* cloud-server: The cloud server layer is an extension of the jaxrs-server and datasources-web-server layers providing cloud-native functionality such as observability and jms-activemq.
+* postgresql-datasource: Adds support for postgresql database drivers, requires the eap-datasources-galleon-pack feature pack.
+* ejb: Adds support for Jakarta Enterprise Beans, excluding the IIOP protocol.
+* web-clustering: Adds support for clusterering
+
+The addition of datasources feature pack and postgresql-datasource layer will instruct the eap-maven-plugin to install and configure a data source to connect to a PostgreSQL database. If we look at the documentation for the PostgresSQL layer, we can see the need for a POSTGRESQL_DRIVER_VERSION build time environment variable. This build time environment variable is mandatory and tells the eap-maven-plugin which version of the PostgreSQL driver to install.
+
+== Deploy the application to OpenShift
+
+We need to push our code changes to our gitea repository.
+
+*Step 4.3:* Click on the "Source Control" icon in the IDE, you should see the following:
+
+image::gitea-eap8-ocp.png[source-contol]
+
+*Step 4.4:* Enter a commit message in the message field and click on the "Commit" button.
+
+You will be prompted to stage files to the commit
+
+image::git-2.png[stage-files]
+
+*Step 4.5:* Click on "Yes" and then click on "Sync Changes" to push your changes to gitea
+
+You will be prompted to enter a username:
+
+image::git-3.png[git-username]
+
+*Step 4.6:* Enter `{{ USER_ID }}`
+
+You will then be prompted for a password:
+
+*Step 4.7:* Enter `{{ CHE_USER_PASSWORD }}`
+
+Your changes will be pushed to gitea.
+
+We can now build our JBoss EAP 8.0 application with Helm.
+
+*Step 4.8:* Access the OpenShift console by clicking on the following {{ CONSOLE_URL }}[link^] 
+
+Login with the following credentials:
+
+* *Username*: `{{ USER_ID }}`
+* *Password*: `{{ CHE_USER_PASSWORD }}`
+
+*Step 4.9:* Switch to the project called "{{ USER_ID }}-project"
+
+*Step 4.10:* Click on Add+.
+
+*Step 4.11:* Select Helm Chart from the developer catalog.
+
+*Step 4.12:* Enter eap in the Filter by keyword field as shown below:
+
+image::helm-charts.png[migration,80%]
+
+*Step 4.13:* Select the JBoss EAP 8 Helm chart from the catalog.
+
+*Step 4.14:* Click on "Create".
+
+*Step 4.16:* Switch to YAML view.
+
+*Step 4.17:* Delete the existing content.
+
+*Step 4.18:* Paste the following YAML:
+
+[source,yaml,role="copypaste"]
+----
+build:
+ uri: 'http://gitea.gitea.svc.cluster.local:3000/{{ USER_ID }}/workshop.git'
+ ref: main
+ contextDir: coolstore-eap8
+ env:
+   - name: POSTGRESQL_DRIVER_VERSION
+     value: '42.6.0'
+deploy:
+ enabled: false
+----
+
+Note: There are a few things to point out in this Helm configuration. We have defined a build time variable POSTGRESQL_DRIVER_VERSION to determine how the PostgreSQL driver version is passed to the eap-maven-plugin when S2I builds the application image. Runtime environment variables (such as user credentials) are read from a secret created when the database is instantiated. So application configuration can be safely stored in Git without any sensitive information.
+
+Two build-configs are created by this Helm chart: an artifacts build and a runtime build. 
+
+It will take a while to build the application. To monitor the progress, follow these steps.
+
+*Step 4.19:* Go to Builds. 
+
+image::eap8-builds.png[migration,80%]
+
+*Step 4.20:* Select eap8-build-artifacts.
+
+*Step 4.21:* Choose the Builds tab.
+
+*Step 4.22:* Click on eap8-build-artifacts-1 to view the logs of the active build.
+
+*Step 4.23:* We can now use the EAP Operator to deploy our EAP image.  Click on "+Add" again and then select "Operator Backed" from the Developer Catalog.  
+
+image::operator-backed.png[operator-backed,80%]
+
+*Step 4.24:* From the list of operator backed options, click on "WildFlyServer", and click on "Create".  From the "Create WildFlyServer" page, select "YAML view" and paste the following:
+
+[source,yaml,role="copypaste"]
+----
+apiVersion: wildfly.org/v1alpha1
+kind: WildFlyServer
+metadata:
+  name: eap8
+spec:
+  serviceAccountName: coolstoresa
+  applicationImage: eap8:latest
+  replicas: 1
+  envFrom:
+    - configMapRef:
+        name: eap-config
+  env:
+    # Credentials to connect to the PostgreSQL databases
+    # and AMQ Broker are taken from their secrets
+    - name: POSTGRESQL_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: database-password
+          name: postgresql
+    - name: POSTGRESQL_USER
+      valueFrom:
+        secretKeyRef:
+          key: database-user
+          name: postgresql
+    - name: MQ_USERNAME
+      valueFrom:
+        secretKeyRef:
+          key: AMQ_USER
+          name: eap74-amq7-credentials-secret
+    - name: MQ_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: AMQ_PASSWORD
+          name: eap74-amq7-credentials-secret
+----
+
+The sensitive credentials (username and password) are pulled from the postgresql and eap74-amq7-credentials-secret secrets in the WildFlyServer custom resource, while the non-sensitive credentials are pulled form the config map we created.
+
+Click on "Create" to create the WildFlyServer custom resource.
+
+Finally we need to create a route to our application
+
+*Step 4.25:* Click on the "Import YAML" button on the top right and paste the following:
+
+[source,yaml,role="copypaste"]
+----
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: coolstore8
+  namespace: {{ USER_ID }}-project
+  labels:
+    app.kubernetes.io/managed-by: eap-operator
+    app.kubernetes.io/name: eap8
+    app.openshift.io/runtime: eap
+    wildfly.org/operated-by-headless: active
+spec:
+  to:
+    kind: Service
+    name: eap8-headless
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: ''
+    destinationCACertificate: ''
+  port:
+    targetPort: http
+----
+
+Switching back to the topology view should show a screen similar to the following image.
+
+image::eap8-ocp.png[migration,80%]
+
+We've now completed the migration of our JBoss EAP 8.0 application to OpenShift.

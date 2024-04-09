@@ -1,0 +1,19 @@
+= JBoss EAP Lab Introduction 
+
+// TODO: add links to docs and articles.
+JBoss EAP 8.0 adds exciting new functionality in the areas of provisioning, cloud tooling, security, and Jakarta EE 10 compliance. The move to Jakarta EE 10 introduced some changes which will require customers to update their JBoss EAP 7.4 applications to enable them to run on JBoss EAP 8.0.
+
+The migration toolkit for applications and the upstream community version (Windup) have been updated to provide rules for the migration to Jakarta EE 10.  We're going to use the Windup VS Code extension to perform code analysis in our IDE.
+
+For OpenShift development, JBoss EAP 8.0 introduces the eap-maven-plugin, which takes care of all the provisioning and configuration required to build an instance of JBoss EAP 8.0 to run our application.
+
+In this lab you will be guided through the migration of a simple JBoss EAP 7.4 application to JBoss EAP 8.0 and deploying the application on OpenShift. 
+
+== Overview of the application
+
+The application we are migrating is a monolith e-commerce site (Coolstore). The application relies on the following components:
+
+* A Red Hat build of Keycloak instance for user authentication
+* A message queue (currently embedded in EAP on VM)
+* A PostgreSQL database.
+

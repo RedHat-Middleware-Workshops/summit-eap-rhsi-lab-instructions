@@ -1,0 +1,50 @@
+= Code Analysis
+
+JBoss EAP 8.0 requires code changes to applications written for JBoss EAP 7.4. Due to the move from Jakarta 8 to Jakarta 10 (e.g. converting from the “javax” namespace to “jakarta” namespace). These changes are documented in this https://access.redhat.com/articles/6980265[article, window="_blank"]. 
+
+== 1. Using the Windup VS Code extension
+
+To perform the required code changes, we're going to use the Windup VS Code extension.  
+
+IMPORTANT: If you do not see the Windup icon on the left hand panel, refresh your browser. Wait for a few seconds and you should see the Windup icon appear.
+
+. Click on the Windup icon on the left hand panel.
++
+image::windup-icon.png[windup-icon]
++
+You should see the Windup configuration page open.
+
+. Configure the Windup VS-Code extension as follows
++
+
+image::windup-config.png[windup-config]
+
+. Set code location to:
++
+[source,sh,role="copypaste"]
+----
+/projects/summit-lab-eap-rhsi/app
+----
++
+* Ensure "eap8 and openjdk17" are selected under "--target" 
+
+*Step 6.3:* To perform the code analysis, click on the start button as shown below
+
+image::mtr-vscode-3.png[migration,400]
+
+Once the analysis is complete, you should see a file hierarchy in the left hand window.  
+
+*Step 6.4:* At the top of the file hierarchy is a report icon (in green).  Click on this to view the HTML version of the report.
+
+image::mtr-results.png[mtr-results,80%]
+
+Clicking on a file will open up the editor showing where the issues are with the file.
+
+*Step 6.5:* Click on "coolstore" in the report, and then select the "Issues" tab to view the details of the migration.
+
+image::mtr-report-issues.png[mtr-report-issues,80%]
+
+*Step 6.6:* You can also select a file from the hierarchy examine in the issues in the code.
+
+image::mtr-vscode-4.png[migration,80%]
+

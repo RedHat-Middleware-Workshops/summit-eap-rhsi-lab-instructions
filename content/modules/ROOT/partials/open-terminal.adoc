@@ -1,0 +1,3 @@
+Access the terminal in dev spaces by clicking on "Menu" -> "Terminal" -> "New Terminal"
+
+image::open-terminal.png[open-terminal]

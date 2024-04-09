@@ -1,0 +1,7 @@
+IMPORTANT: Before pushing to git you will need to set your git email and name.  To do this, from the integrated terminal, enter the following commands.
+
+[source,sh,role="copypaste",subs=attributes+]
+----
+ git config --global user.email "{USER_ID}@example.com"
+ git config --global user.name "{USER_ID}"
+----

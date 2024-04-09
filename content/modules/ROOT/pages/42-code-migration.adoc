@@ -1,0 +1,262 @@
+= Code Migration
+
+Now that we've performed the analysis of our code to determine the changes needed to migrate to JBoss EAP 8.0, we can now make the changes to the code using automated and manual code changes.
+
+== 1. Automated file changes
+
+You can also apply all the quickfixes to the code base by right clicking on "workshop" at the top of the hierarchy and clicking on "Apply all guickfixes".
+
+image::mtr-vscode-5.png[migration,400]
+
+Once you've completed the namespace changes, there is one more minor code change to make:
+
+*Step 6.8:* Open `/projects/workshop/coolstore/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java/OrderServiceMDB.java` and change
+
+[source,java]
+----
+@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")
+----
+
+to 
+[source,java,role="copypaste"]
+----
+@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "jakarta.jms.Topic"),
+----
+
+We can now run the code analysis again, 
+
+*Step 6.9:* To perform the code analysis, click on the start button as shown below
+
+image::mtr-vscode-3.png[migration,400]
+
+Once the analysis is complete, you should see a file hierarchy updated.  
+
+*Step 6.10:* At the top of the file hierarchy is a report icon (in green).  Click on this to view the HTML version of the report.
+
+image::mtr-results.png[mtr-results2,80%]
+
+You should see the story points are now reduced to 15.
+
+In the Analysis results tree click on "persistence.xml".  
+
+Change
+
+[source,xml]
+----
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+----
+
+to 
+
+[source,xml,role="copypaste"]
+----
+https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+----
+
+Open the pom.xml file and make the following changes
+
+Change 
+
+[source,xml]
+----
+        <dependency>
+            <groupId>org.jboss.spec.javax.jms</groupId>
+            <artifactId>jboss-jms-api_2.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+to
+
+[source,xml,role="copypaste"]
+----
+        <dependency>
+            <groupId>jakarta.jms</groupId>
+            <artifactId>jakarta.jms-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+Change
+
+[source,xml]
+----
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-eap-jakartaee8-with-tools</artifactId>
+                <version>${version.server.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+----
+to 
+
+[source,xml,role="copypaste"]
+----
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-eap-ee-with-tools</artifactId>
+                <version>${version.server.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+----
+Change
+
+[source,xml]
+----
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+to
+
+[source,xml,role="copypaste"]
+----
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+Change
+
+[source,xml]
+----
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+to
+
+[source,xml,role="copypaste"]
+----
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+Change
+
+[source,xml]
+----
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.3_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+to
+
+[source,xml,role="copypaste"]
+----
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+Change
+
+[source,xml]
+----
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+to
+
+[source,xml,role="copypaste"]
+----
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+----
+
+
+Change
+ 
+[source,xml]
+----
+<version.server.bom>7.4.0.GA</version.server.bom>
+----
+
+to
+
+[source,xml,role="copypaste"]
+----
+<version.server.bom>8.0.0.GA-redhat-00009</version.server.bom>
+----
+
+In the Analysis results tree click on "beans.xml
+".  
+
+Change
+
+[source,xml]
+----
+https://jakarta.ee/xml/ns/jakartaee/beans_1_1.xsd"
+----
+
+to 
+
+[source,xml,role="copypaste"]
+----
+https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+----
+
+
+*Step 6.9:* Alternatively you can copy these files from a pre-prepared JBoss EAP 8.0 version of the app in the /projects/sample-app-eap8 folder by running the following commands.
+
+[source,sh,role="copypaste"]
+----
+cp /projects/workshop/coolstore-eap8/pom.xml /projects/workshop/coolstore
+----
+
+Before we build our app, we're going to make a small update to the ui.
+
+Open the file `/projects/workshop/coolstore/src/main/webapp/partials/header.html` 
+
+Change line 43 from:
+
+[source,java]
+----
+<a ng-href="#/" class="active">EAP7 Cool Store</a>
+----
+
+to 
+[source,java,role="copypaste"]
+----
+<a ng-href="#/" class="active">EAP8 Cool Store</a>
+----
+
+*Step 6.10:* We can now build our JBoss EAP 8.0 application
+
+[source,sh,role="copypaste"]
+----
+cd /projects/workshop/coolstore && mvn clean package
+----
+
+
+The code changes required to move from JBoss EAP 7.4 to JBoss EAP 8.0 are now complete, we can now move on to deployment to OpenShift.
+

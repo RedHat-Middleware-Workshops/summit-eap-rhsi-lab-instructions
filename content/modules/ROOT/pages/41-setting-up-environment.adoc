@@ -1,0 +1,80 @@
+
+= Setting up your environment
+
+== 1. Configuring terminals
+
+. Access the terminal in dev spaces by clicking on "Menu" -> "Terminal" -> "New Terminal"
++
+image::open-terminal.png[open-terminal]
+
++
+. *Switch to the project called "{USER_ID}-project"*
++
+
+[source,sh,role="copypaste",subs=attributes+]
+----
+oc project {USER_ID}-project
+----
+
+. You should see an output similar to the one below
++
+
+[source,sh,role="copypaste",subs=attributes+]
+----
+Using project "{USER_ID}-project" on server
+----
+
+. Since we'll be using multiple terminal sessions in this exercise (one for OpenShift and other for the VM). Let's rename this terminal tab to avoid confusion. Click on the `bash` icon as show below and select `Rename`option
++
+
+image::rhsi-rename-ocp.png[rhsi-rename-ocp]
+
+
+. Rename it to `OCP` and hit enter
++
+
+image::rhsi-enter-ocp.png[rhsi-enter-ocp]
+
+. Your terminal should look something like this
++
+
+image::rhsi-only-ocp-terminal.png[rhsi-only-ocp-terminal]
+
+== 2. Logging into the VM using devspaces terminal
+. Create a new terminal window to log into the VM by clicking the split terminal icon
++
+
+image::rhsi-split-terminal.png[rhsi-split-terminal]
+
+. Rename newly created terminal window (the one to the right). Right click on the `bash` icon as show below and select `Rename`option
++
+
+image::rhsi-rename-vm.png[rhsi-rename-vm]
+
+. Rename it to `VM` and hit enter
++
+
+image::rhsi-enter-vm.png[rhsi-enter-vm]
+
+. Your terminal should look something like this
++
+
+image::rhsi-terminal.png[rhsi-terminal]
+
+. Login to the VM using this newly created terminal tab+
++
+
+[source,sh,role="copypaste",subs=attributes+]
+----
+ssh -o ServerAliveInterval=60 {bastion_ssh_user_name}@{bastion_public_hostname}
+----
+
+. Enter the following password to login
++
+*Password:* `{bastion_ssh_password}`
+
+. If the login has been successful you should be logged in as `lab-user` on the VM
++
+
+image::rhsi-vm-terminal.png[rhsi-vm-terminal]
+

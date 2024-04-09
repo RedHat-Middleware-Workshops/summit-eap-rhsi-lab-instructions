@@ -1,0 +1,8 @@
+== Workshop summary
+
+In this workshop we've completed the migration of a JBoss EAP 7.4 application to JBoss EAP 8.0.  We've then deployed this application on OpenShift.
+We've use Red Hat Service Interconnect to create a connection between a PostgreSQL database service running on a virtual machine and an OpenShift namespace.
+
+The resulting architecture should resemble our desired end-state:
+
+image::end-architecture.png[end architecture]

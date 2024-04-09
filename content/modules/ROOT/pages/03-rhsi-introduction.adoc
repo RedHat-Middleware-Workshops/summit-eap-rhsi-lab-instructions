@@ -1,0 +1,6 @@
+== Introduction 
+https://www.redhat.com/en/technologies/cloud-computing/service-interconnect[Red Hat Service Interconnect^] enables application and service connectivity across different environments through layer 7 addressing and routing. Using either a simple command line interface or an operator, interconnections are created in a matter of minutes, avoiding extensive networking planning, and overhead. All interconnections between environments use mutual TLS(mTLS) to keep your organization’s infrastructure and data protected. Red Hat Service Interconnect is based on the open source https://skupper.io/[Skupper project.^]
+
+== Overview of the application
+
+

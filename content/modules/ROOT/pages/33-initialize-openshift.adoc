@@ -1,0 +1,61 @@
+# Red Hat Service Interconnect on OpenShift
+
+As mentioned earlier, we could either use the CLI or operator to initialize Red Hat Service Interconnect. To showcase both the options we'll be using the operator on OpenShift and the CLI on the VM build the connectivity.
+
+## 1. Deploying Red Hat Service Interconnect
+
+. From the devspaces UI navigate to the terminal on OpenShift where you logged into the OpenShift Cluster
++
+image::rhsi-ocp-terminal.png[rhsi-ocp-terminal]
+
+. Login to the right project
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+oc project {USER_ID}-project
+----
+
+. Ensure you're at the root of the project
++
+[source,sh,role="copypaste"]
+----
+cd /projects/summit-lab-eap-rhsi
+----
+
+. Create a config file with the name `mysite.yaml` by right-clicking on the top-level `summit-lab-eap-rhsi` folder and choosing "New File..." and name it `mysite.yaml`:
++
+image::rhsi-newfile.png[rhsi-newfile]
+
+. Paste the below contents into the new file:
++
+[source,yaml,role="copypaste"]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: skupper-site
+data:
+  name: ocp
+  console: "true"
+  console-user: "admin"
+  console-password: "openshift"
+  flow-collector: "true"
+----
+
+. Initialize the Service Interconnect Router by issuing the below command in the OCP terminal. This should install the Service Interconnect resources in the namespace
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+oc apply -f mysite.yaml
+----
+
+. Wait for a few seconds and navigate to the https://skupper-{openshift_cluster_user_name}-project.{openshift_cluster_ingress_domain}/#/topology[Red Hat Service Interconnect console^] to verify that OCP cluster appears in the topology. Once the connectivity is established we should be able to see the VM in the topology view. Ignore any warnings and proceed by pressing the advanced link on your browser
+
+. Login with the following credentials:
++
+* *Username*: `admin`
+* *Password*: `openshift`
+
+. You should now be able to see that Openshift cluster (ocp) appears in the topology.
++
+image::rhsi-ocp-topology.png[rhsi-ocp-topology]

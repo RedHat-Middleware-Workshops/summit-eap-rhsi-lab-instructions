@@ -1,0 +1,13 @@
+= Migrating JBoss EAP 8.0 to OpenShift Container Platform with Red Hat Service Interconnect
+:toc:
+:toc-placement: preamble
+:sectnums:
+:icons: font
+
+== Agenda
+
+In these labs you will be guided through the following exercises
+
+* Red Hat Service Interconnect Lab
+* EAP 7.4 to EAP 8.0 on OpenShift Migration Lab
+

@@ -1,0 +1,25 @@
+name: modules
+version: master
+nav:
+  - modules/ROOT/nav.adoc
+
+
+asciidoc:
+  attributes:
+    release-version: master
+    page-pagination: true
+    experimental:
+    numbered:
+    lab_name: "Migration from JBoss EAP 7.4 to JBoss EAP 8.0 on OpenShift"
+    guid: my-guid
+    ssh_user: lab-user
+    ssh_password: lab-user
+    ssh_command: ssh devops@bastion.{guid}.example.opentlc.com
+    devspaces_url: https://devspaces.apps.cluster-p9dj5.p9dj5.sandbox211.opentlc.com/dashboard/#/
+    EAP8_VERSION: JBoss EAP 8-Beta
+    USER_ID: user1
+    openshift_cluster_console_url: https://console-openshift-console.apps.cluster-p9dj5.p9dj5.sandbox211.opentlc.com
+
+  extensions:
+    - ./content/lib/tab-block.js
+    - ./content/lib/remote-include-processor.js

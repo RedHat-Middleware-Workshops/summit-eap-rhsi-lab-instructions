@@ -1,0 +1,119 @@
+# Linking RHSI on OpenShif and VM
+
+To create a link between the environments, you create a token on one of the environments, and then use the token to create the link on the other. This token will be used to setup a mTLS (mutual TLS) secured link between the two environments.
+
+## 1. Create a token from RHSI on OpenShift
+
+. Make sure you are on the OCP terminal
++
+image::rhsi-ocp-terminal.png[rhsi-ocp-terminal]
+
+. Create a YAML file to request a token by right-clicking on the top-level `summit-lab-eap-rhsi` folder and choosing "New File..." and name it `token-request.yaml`:
++
+image::rhsi-newfile.png[rhsi-newfile]
+
+. Paste the below contents into the new file
++
+[source,yaml,role="copypaste"]
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    skupper.io/type: connection-token-request
+  name: secret-name
+----
+
+. Apply the YAML to the namespace to create a secret.
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+oc apply -f token-request.yaml
+----
+
+. Create the actual token from the secret
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+oc get secret -o yaml secret-name | yq 'del(.metadata.namespace)' > token.yaml
+----
++
+Open the newly-created `token.yaml` file in DevSpaces by clicking on it on the left. This is actually an OpenShift secret which contains a certificate. This certificate will be used to setup a mTLS (mutual TLS) secured link between the two environments. The next step is creating the link on the VM with the token.
+
+## 2. Create link on the VM with the token
+
+. In the OCP Terminal, run the following command to copy this token file to the VM into the home directory for `lab-user`:
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+scp token.yaml {bastion_ssh_user_name}@{bastion_public_hostname}:secret.token
+----
++
+You will need to supply the same VM password as before: `{bastion_ssh_password}`
+
+. Create a link on the VM using the token by running this command on the VM terminal:
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+skupper link create secret.token --name ocp-to-vm
+----
++
+You should see:
++
+[source,sh,subs=attributes+]
+----
+Site configured to link to skupper-inter-router-{USER_ID}-project.{openshift_cluster_ingress_domain}:443 (name=ocp-to-vm)
+Check the status of the link using 'skupper link status'.
+----
+
+. Navigate back to the web console tab on your browser and refresh the tab. You should now be able to see the VM in the topology
++
+image::rhs-ocp-vm-topology.png[rhs-ocp-vm-topology]
++
+This confirms that the link has now been established
++
+[IMPORTANT]
+====
+The circles depicting the environments might overlap each other sometimes and hence might not be visible. If that's the case, click on the circle that's visible and drag it to the side ensure proper visibility.
+====
+
+
+. Finally, you need to expose the soap service running on the VM over the link. This will allow the soap service to be accessed from the openshift cluster as if it was a local service.
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+skupper expose host host.containers.internal --address soap-api --port 8080
+----
+
+. When you are connecting Openshift to the VM using Red Hat Service Interconnect, you have to create a proxy service that will redirect to the database running on the VM. Create a YAML file for this service definition by right-clicking on the top-level `rh1-lab-eap-camel-quarkus` folder and choosing "New File..." and name it `skupper-service.yaml`:
++
+image::rhsi-newfile.png[rhsi-newfile]
++
+Paste the below contents into the new file:
++
+[source,yaml,role="copypaste"]
+----
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgresql-db
+  annotations:
+    skupper.io/address: postgresql-db
+    skupper.io/port: "5432"
+    skupper.io/proxy: "tcp"
+    skupper.io/target: "postgresql-db"
+
+spec:
+  ports:
+    - name: port5432
+      protocol: TCP
+      port: 5432
+      targetPort: 1025
+----
+
+. Create the service
++
+[source,sh,role="copypaste",subs=attributes+]
+----
+oc apply -f skupper-service.yaml
+----

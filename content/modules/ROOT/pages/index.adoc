@@ -1,0 +1,24 @@
+== Introduction 
+A customer is embarking on a modernization and cloud migration project, they've selected OpenShift to run containerized workloads on a Hyperscaler.  They are now planning to move applications from virtual machines located on in-house datacenters to OpenShift.  These applications will be updated to use cloud-native technologies in the process.
+
+In this scenario we will be migrating an e-commere store which consists of four components:
+
+
+* A JBoss EAP 7.4 application, this is the e-commerce application frontend and backend.
+* A message queue, currently provided by the JBoss EAP Application Platform
+* An instance of Red Hat Build of Keycloak for authentication
+* A PostgreSQL database
+
+image::start-architecture.png[starting architecture]
+
+As you can see from the existing architecture, all of these applications are deployed on a virtual machine on an internal subnet. The database has some internal dependencies so this will be moved in a later phase.
+
+During the course of this lab we will:
+
+* Migrate the JBoss EAP 7.4 application to JBoss EAP 8.0 running on OpenShift
+* The database cannot be moved until a later phase, so we will use Red Hat Service Interconnect to establish a connection between our new application running on OpenShift and the SOAP service running on the existing on-prem Virtual Machine.
+* Migrate the Red Hat Fuse application to a Red Hat build of Apache Camel on Quarkus application running on OpenShift
+
+The desired end state is as follows:
+
+image::end-architecture.png[end architecture]
