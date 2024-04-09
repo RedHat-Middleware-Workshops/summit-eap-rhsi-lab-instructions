@@ -23,7 +23,7 @@ You will be promted to Authorize access to the devspaces client to access your a
 +
 Once you log in, you’ll be placed on your personal dashboard. 
 +
-You should see a workspace called "eap-camelq-lab"
+You should see a workspace called "eap-rhsi-lab"
 +
 image::devspaces-dashboard.png[devspaces-dashboard]
 

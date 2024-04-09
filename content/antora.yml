@@ -16,7 +16,7 @@ asciidoc:
     ssh_password: lab-user
     ssh_command: ssh devops@bastion.{guid}.example.opentlc.com
     devspaces_url: https://devspaces.apps.cluster-p9dj5.p9dj5.sandbox211.opentlc.com/dashboard/#/
-    EAP8_VERSION: JBoss EAP 8-Beta
+    EAP8_VERSION: JBoss EAP 8.0
     USER_ID: user1
     openshift_cluster_console_url: https://console-openshift-console.apps.cluster-p9dj5.p9dj5.sandbox211.opentlc.com
 

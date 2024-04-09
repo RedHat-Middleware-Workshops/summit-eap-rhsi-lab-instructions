@@ -16,8 +16,7 @@ As you can see from the existing architecture, all of these applications are dep
 During the course of this lab we will:
 
 * Migrate the JBoss EAP 7.4 application to JBoss EAP 8.0 running on OpenShift
-* The database cannot be moved until a later phase, so we will use Red Hat Service Interconnect to establish a connection between our new application running on OpenShift and the SOAP service running on the existing on-prem Virtual Machine.
-* Migrate the Red Hat Fuse application to a Red Hat build of Apache Camel on Quarkus application running on OpenShift
+* The database cannot be moved until a later phase, so we will use Red Hat Service Interconnect to establish a connection between our new application running on OpenShift and the database running on the existing on-prem Virtual Machine.
 
 The desired end state is as follows:
 

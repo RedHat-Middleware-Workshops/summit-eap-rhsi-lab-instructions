@@ -4,29 +4,27 @@
 
 * xref:03-rhsi-introduction.adoc[3. Red Hat Service Interconnect Lab]
 
-** xref:41-setting-up-environment.adoc[3.1 Setting Up Your Development Environment]
+** xref:31-deployment-overview.adoc[3.1 Deployment overview]
 
-** xref:42-deployment-overview.adoc[3.2 Deployment overview]
+** xref:32-initialize-openshift.adoc[3.2 Red Hat Service Interconnect on Openshift]
 
-** xref:43-initialize-openshift.adoc[3.3 Red Hat Service Interconnect on Openshift]
+** xref:33-initialize-vm.adoc[3.3 Red Hat Service Interconnect on Virtual Machine]
 
-** xref:44-initialize-vm.adoc[3.4 Red Hat Service Interconnect on Virtual Machine]
+** xref:34-create-link.adoc[3.4 Linking RHSI on OpenShift and VM]
 
-** xref:45-create-link.adoc[3.5 Linking RHSI on OpenShift and VM]
-
-** xref:47-summary.adoc[3.7 Summary]
+** xref:35-summary.adoc[3.5 Summary]
 
 
-* xref:03-eap-introduction.adoc[4. EAP 7.4 to EAP 8.0 Migration Lab]
+* xref:04-eap-introduction.adoc[4. EAP 7.4 to EAP 8.0 Migration Lab]
 
-** xref:31-code-analysis.adoc[4.1 Performing Code Analysis]
+** xref:41-code-analysis.adoc[4.1 Performing Code Analysis]
 
-** xref:32-code-migration.adoc[4.2 Making Code Changes]
+** xref:42-code-migration.adoc[4.2 Making Code Changes]
 
-** xref:33-openshift-environment.adoc[4.3 Setting up OpenShift environment]
+** xref:43-openshift-environment.adoc[4.3 Setting up OpenShift environment]
 
-** xref:34-deployment.adoc[4.4 Deploying the EAP 8.0 application on OpenShift]
+** xref:44-deployment.adoc[4.4 Deploying the EAP 8.0 application on OpenShift]
 
-** xref:35-summary.adoc[4.5 Summary]
+** xref:45-summary.adoc[4.5 Summary]
 
 * xref:05-summary.adoc[5.0 Workshop Summary]

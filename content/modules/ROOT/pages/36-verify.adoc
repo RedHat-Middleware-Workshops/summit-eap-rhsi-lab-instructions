@@ -3,7 +3,7 @@
 
 At this point you can verify that the service network is actually working as expected.
 
-## 1. Test SOAP request
+## 1. Test database request
 
 . Make sure you are on the OCP terminal
 +

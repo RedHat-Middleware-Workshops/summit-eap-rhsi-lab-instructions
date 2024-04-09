@@ -78,11 +78,11 @@ The circles depicting the environments might overlap each other sometimes and he
 ====
 
 
-. Finally, you need to expose the soap service running on the VM over the link. This will allow the soap service to be accessed from the openshift cluster as if it was a local service.
+. Finally, you need to expose the database running on the VM over the link. This will allow the database to be accessed from the openshift cluster as if it was a local service.
 +
 [source,sh,role="copypaste",subs=attributes+]
 ----
-skupper expose host host.containers.internal --address soap-api --port 8080
+skupper expose host host.containers.internal --address postgresql-db --port 5432
 ----
 
 . When you are connecting Openshift to the VM using Red Hat Service Interconnect, you have to create a proxy service that will redirect to the database running on the VM. Create a YAML file for this service definition by right-clicking on the top-level `rh1-lab-eap-camel-quarkus` folder and choosing "New File..." and name it `skupper-service.yaml`:

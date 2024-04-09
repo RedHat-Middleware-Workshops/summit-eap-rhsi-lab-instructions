@@ -10,7 +10,7 @@ image::mtr-vscode-5.png[migration,400]
 
 Once you've completed the namespace changes, there is one more minor code change to make:
 
-*Step 6.8:* Open `/projects/workshop/coolstore/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java/OrderServiceMDB.java` and change
+*Step 6.8:* Open `/projects/summit-lab-eap-rhsi/app/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java/OrderServiceMDB.java` and change
 
 [source,java]
 ----
@@ -226,16 +226,16 @@ https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
 ----
 
 
-*Step 6.9:* Alternatively you can copy these files from a pre-prepared JBoss EAP 8.0 version of the app in the /projects/sample-app-eap8 folder by running the following commands.
+*Step 6.9:* Alternatively you can copy these files from a pre-prepared JBoss EAP 8.0 version of the app in the /projects/summit-lab-eap-rhsi/eap8-app folder by running the following commands.
 
 [source,sh,role="copypaste"]
 ----
-cp /projects/workshop/coolstore-eap8/pom.xml /projects/workshop/coolstore
+cp /projects/summit-lab-eap-rhsi/eap8-app/pom.xml /projects/summit-lab-eap-rhsi/app
 ----
 
 Before we build our app, we're going to make a small update to the ui.
 
-Open the file `/projects/workshop/coolstore/src/main/webapp/partials/header.html` 
+Open the file `/projects/summit-lab-eap-rhsi/app/src/main/webapp/partials/header.html` 
 
 Change line 43 from:
 
@@ -254,7 +254,7 @@ to
 
 [source,sh,role="copypaste"]
 ----
-cd /projects/workshop/coolstore && mvn clean package
+cd /projects/summit-lab-eap-rhsi/app && mvn clean package
 ----
 
 

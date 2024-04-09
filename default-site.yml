@@ -1,5 +1,5 @@
 site:
-  title: "Replatforming JBoss EAP and Fuse with OpenShift and Red Hat Service Interconnect"
+  title: "Migrating JBoss EAP 8.0 to OpenShift Container Platform with Red Hat Service Interconnect"
   url: https://redhat-scholars.github.io/course-template
   start_page: modules::index.adoc
 
