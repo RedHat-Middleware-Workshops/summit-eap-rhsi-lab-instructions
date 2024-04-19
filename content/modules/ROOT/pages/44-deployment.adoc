@@ -152,14 +152,15 @@ Your changes will be pushed to gitea.
 
 We can now build our JBoss EAP 8.0 application with Helm.
 
-*Step 4.8:* Access the OpenShift console by clicking on the following {{ CONSOLE_URL }}[link^] 
+*Step 4.8:* Access the OpenShift console by clicking on the following {openshift_console_url
+}[link^] 
 
 Login with the following credentials:
 
 * *Username*: `{USER_ID}`
 * *Password*: `openshift`
 
-*Step 4.9:* Switch to the project called "{{ USER_ID }}-project"
+*Step 4.9:* Switch to the project called "{USER_ID}-project"
 
 *Step 4.10:* Click on Add+.
 
