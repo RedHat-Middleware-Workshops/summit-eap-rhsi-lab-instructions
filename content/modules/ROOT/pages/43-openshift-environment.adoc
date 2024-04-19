@@ -62,21 +62,14 @@ Login with the following credentials:
 
 *Step 3.6: Switch to the project called "{{ USER_ID }}-project"*
 
-## Deploy a PostgreSQL database
+## Create a secret for the PostgreSQL database
 
-*Step 3.7:* Within this project, add a PostgreSQL database by Clicking on "+Add" and selecting "Database" from the Developer catalog.
+*Step 3.7:* Within this project, add a PostgreSQL secret by running the following from the terminal
 
-*Step 3.8:* From the Developer catalog, select the "PostgreSQL" template and fill out the form details as shown below.
-
-image::postgresql-template.png[postgresql-template,80%]
-[source,sh]
+[source,sh,role="copypaste"]
 ----
-* User name: postgresUser
-* Password: postgresPW
-* Database name: postgresDB
+oc create secret generic postgresql --from-literal database-password=postgresPW --from-literal database-user=postgresUser -n {{ USER_ID }}-project 
 ----
-
-*Step 3.9:* Click on "Create" to create the postgreSQL database instance.
 
 ## Deploy an AMQ broker instance
 

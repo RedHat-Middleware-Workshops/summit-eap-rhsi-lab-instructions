@@ -19,7 +19,7 @@ oc project {USER_ID}-project
 +
 [source,sh,role="copypaste"]
 ----
-cd /projects/summit-lab-eap-rhsi
+cd /projects/eap-rhsi-lab
 ----
 
 . Create a config file with the name `mysite.yaml` by right-clicking on the top-level `summit-lab-eap-rhsi` folder and choosing "New File..." and name it `mysite.yaml`:

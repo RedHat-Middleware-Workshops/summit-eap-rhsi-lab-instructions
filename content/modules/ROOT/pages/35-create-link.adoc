@@ -96,7 +96,7 @@ Paste the below contents into the new file:
 kind: Service
 apiVersion: v1
 metadata:
-  name: postgresql-db
+  name: postgresql
   annotations:
     skupper.io/address: postgresql-db
     skupper.io/port: "5432"

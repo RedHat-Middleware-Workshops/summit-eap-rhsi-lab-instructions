@@ -4,15 +4,17 @@
 
 * xref:03-rhsi-introduction.adoc[3. Red Hat Service Interconnect Lab]
 
-** xref:31-deployment-overview.adoc[3.1 Deployment overview]
+** xref:31-setting-up-environment.adoc[3.1 Setting up your environment]
 
-** xref:32-initialize-openshift.adoc[3.2 Red Hat Service Interconnect on Openshift]
+** xref:32-deployment-overview.adoc[3.2 Deployment overview]
 
-** xref:33-initialize-vm.adoc[3.3 Red Hat Service Interconnect on Virtual Machine]
+** xref:33-initialize-openshift.adoc[3.3 Red Hat Service Interconnect on Openshift]
 
-** xref:34-create-link.adoc[3.4 Linking RHSI on OpenShift and VM]
+** xref:34-initialize-vm.adoc[3.4 Red Hat Service Interconnect on Virtual Machine]
 
-** xref:35-summary.adoc[3.5 Summary]
+** xref:35-create-link.adoc[3.5 Linking RHSI on OpenShift and VM]
+
+** xref:36-summary.adoc[3.6 Summary]
 
 
 * xref:04-eap-introduction.adoc[4. EAP 7.4 to EAP 8.0 Migration Lab]
