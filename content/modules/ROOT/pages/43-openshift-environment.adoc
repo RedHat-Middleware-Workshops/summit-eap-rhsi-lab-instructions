@@ -19,7 +19,8 @@ We've already deployed an instance of Red Hat Build of Keycloak using the Red Ha
 ----
 {
   "realm": "eap",
-  "auth-server-url": "https://rhbk-rhbk.{{ ROUTE_SUBDOMAIN }}/",
+  "auth-server-url": "https://rhbk-rhbk.{{ openshift_cluster_ingress_domain
+ }}/",
   "ssl-required": "external",
   "resource": "eap-app",
   "public-client": true,
@@ -43,24 +44,24 @@ Click on "Yes" and then click on "Sync Changes" to push your changes to gitea
 
 image::git-3.png[git-username]
 
-Enter `{{ USER_ID }}`
+Enter `{USER_ID}`
 
 *Step 3.4:* You will then be prompted for a password:
 
-Enter `{{ CHE_USER_PASSWORD }}`
+Enter `password`
 
 Your changes will be pushed to gitea.
 
 ## Deploying on OpenShift
 
-*Step 3.5:* Access the OpenShift console by clicking on the following {{ CONSOLE_URL }}[link^] 
+*Step 3.5:* Access the OpenShift console by clicking on the following {openshift_console_url}[link^] 
 
 Login with the following credentials:
 
-* *Username*: `{{ USER_ID }}`
-* *Password*: `{{ CHE_USER_PASSWORD }}`
+* *Username*: `{USER_ID}`
+* *Password*: `openshift`
 
-*Step 3.6: Switch to the project called "{{ USER_ID }}-project"*
+*Step 3.6: Switch to the project called "{USER_ID}-project"*
 
 ## Create a secret for the PostgreSQL database
 
@@ -68,7 +69,7 @@ Login with the following credentials:
 
 [source,sh,role="copypaste"]
 ----
-oc create secret generic postgresql --from-literal database-password=postgresPW --from-literal database-user=postgresUser -n {{ USER_ID }}-project 
+oc create secret generic postgresql --from-literal database-password=postgresPW --from-literal database-user=postgresUser -n {USER_ID}-project 
 ----
 
 ## Deploy an AMQ broker instance

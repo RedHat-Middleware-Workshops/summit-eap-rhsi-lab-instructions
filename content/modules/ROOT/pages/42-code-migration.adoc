@@ -10,7 +10,7 @@ image::mtr-vscode-5.png[migration,400]
 
 Once you've completed the namespace changes, there is one more minor code change to make:
 
-*Step 6.8:* Open `/projects/summit-lab-eap-rhsi/app/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java/OrderServiceMDB.java` and change
+*Step 6.8:* Open `/projects/summit-lab-eap-rhsi/app/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java` and change
 
 [source,java]
 ----
@@ -230,12 +230,12 @@ https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
 
 [source,sh,role="copypaste"]
 ----
-cp /projects/summit-lab-eap-rhsi/eap8-app/pom.xml /projects/summit-lab-eap-rhsi/app
+cp /projects/eap-rhsi-lab/coolstore-eap8/pom.xml /projects/eap-rhsi-lab/coolstore
 ----
 
 Before we build our app, we're going to make a small update to the ui.
 
-Open the file `/projects/summit-lab-eap-rhsi/app/src/main/webapp/partials/header.html` 
+Open the file `/projects/eap-rhsi-lab/coolstore/src/main/webapp/partials/header.html` 
 
 Change line 43 from:
 
@@ -254,7 +254,7 @@ to
 
 [source,sh,role="copypaste"]
 ----
-cd /projects/summit-lab-eap-rhsi/app && mvn clean package
+cd /projects/eap-rhsi-lab/coolstore && mvn clean package
 ----
 
 

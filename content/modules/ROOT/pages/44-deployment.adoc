@@ -11,21 +11,9 @@ The JBoss EAP Maven plugin uses https://github.com/wildfly/galleon#overview[Gall
 To build and deploy this application on OpenShift, the only change we need to make is to the Maven pom.xml file. This involves adding the eap-maven-plugin, which takes care of all the provisioning and configuration required to build an instance of JBoss EAP 8.0 to run our application.
 
 
-In the IDE, open the file: coolstore-eap8/src/main/webapp/keycloak.json and ensure the contents are as follows:
 
-[source,json,role="copypaste"]
-----
-{
-  "realm": "eap",
-  "auth-server-url": "https://rhbk-rhbk.{{ ROUTE_SUBDOMAIN }}/",
-  "ssl-required": "external",
-  "resource": "eap-app",
-  "public-client": true,
-  "confidential-port": 0
-}
-----
 
-*Step 4.1:* Next step is to add the Red Hat plugin repositories for Red Hat GA software. Open the file `coolstore-eap8/pom.xml` and add this after the repositories tag.
+*Step 4.1:* Next step is to add the Red Hat plugin repositories for Red Hat GA software. Open the file `coolstore/pom.xml` and add this after the repositories tag.
 
 [source,xml,role="copypaste"]
 ----
@@ -154,11 +142,11 @@ You will be prompted to enter a username:
 
 image::git-3.png[git-username]
 
-*Step 4.6:* Enter `{{ USER_ID }}`
+*Step 4.6:* Enter `{USER_ID}`
 
 You will then be prompted for a password:
 
-*Step 4.7:* Enter `{{ CHE_USER_PASSWORD }}`
+*Step 4.7:* Enter `openshift`
 
 Your changes will be pushed to gitea.
 
@@ -168,8 +156,8 @@ We can now build our JBoss EAP 8.0 application with Helm.
 
 Login with the following credentials:
 
-* *Username*: `{{ USER_ID }}`
-* *Password*: `{{ CHE_USER_PASSWORD }}`
+* *Username*: `{USER_ID}`
+* *Password*: `openshift`
 
 *Step 4.9:* Switch to the project called "{{ USER_ID }}-project"
 
@@ -194,9 +182,9 @@ image::helm-charts.png[migration,80%]
 [source,yaml,role="copypaste"]
 ----
 build:
- uri: 'http://gitea.gitea.svc.cluster.local:3000/{{ USER_ID }}/workshop.git'
+ uri: 'http://gitea.gitea.svc.cluster.local:3000/{USER_ID}/summit-eap-rhsi-lab-sample-app'
  ref: main
- contextDir: coolstore-eap8
+ contextDir: coolstore
  env:
    - name: POSTGRESQL_DRIVER_VERSION
      value: '42.6.0'
@@ -233,7 +221,6 @@ kind: WildFlyServer
 metadata:
   name: eap8
 spec:
-  serviceAccountName: coolstoresa
   applicationImage: eap8:latest
   replicas: 1
   envFrom:
@@ -278,7 +265,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: coolstore8
-  namespace: {{ USER_ID }}-project
+  namespace: {USER_ID}-project
   labels:
     app.kubernetes.io/managed-by: eap-operator
     app.kubernetes.io/name: eap8
@@ -287,13 +274,14 @@ metadata:
 spec:
   to:
     kind: Service
-    name: eap8-headless
-  tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: ''
-    destinationCACertificate: ''
+    name: eap8-loadbalancer
+    weight: 100
   port:
     targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
+  wildcardPolicy: None
 ----
 
 Switching back to the topology view should show a screen similar to the following image.

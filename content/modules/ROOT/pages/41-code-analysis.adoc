@@ -23,7 +23,7 @@ image::windup-config.png[windup-config]
 +
 [source,sh,role="copypaste"]
 ----
-/projects/summit-lab-eap-rhsi/app
+/projects/eap-rhsi-lab/coolstore
 ----
 +
 * Ensure "eap8 and openjdk17" are selected under "--target" 
