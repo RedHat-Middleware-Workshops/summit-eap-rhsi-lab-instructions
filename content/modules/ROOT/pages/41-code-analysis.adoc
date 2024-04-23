@@ -28,23 +28,23 @@ image::windup-config.png[windup-config]
 +
 * Ensure "eap8 and openjdk17" are selected under "--target" 
 
-*Step 6.3:* To perform the code analysis, click on the start button as shown below
-
+. To perform the code analysis, click on the start button as shown below
++
 image::mtr-vscode-3.png[migration,400]
-
++
 Once the analysis is complete, you should see a file hierarchy in the left hand window.  
 
-*Step 6.4:* At the top of the file hierarchy is a report icon (in green).  Click on this to view the HTML version of the report.
-
+. At the top of the file hierarchy is a report icon (in green).  Click on this to view the HTML version of the report.
++
 image::mtr-results.png[mtr-results,80%]
-
++
 Clicking on a file will open up the editor showing where the issues are with the file.
 
-*Step 6.5:* Click on "coolstore" in the report, and then select the "Issues" tab to view the details of the migration.
-
+. Click on "coolstore" in the report, and then select the "Issues" tab to view the details of the migration.
++
 image::mtr-report-issues.png[mtr-report-issues,80%]
 
-*Step 6.6:* You can also select a file from the hierarchy examine in the issues in the code.
-
+. You can also select a file from the hierarchy examine in the issues in the code.
++
 image::mtr-vscode-4.png[migration,80%]
 

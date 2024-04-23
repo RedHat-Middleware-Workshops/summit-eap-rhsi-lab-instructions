@@ -4,59 +4,60 @@ Now that we've performed the analysis of our code to determine the changes neede
 
 == 1. Automated file changes
 
-You can also apply all the quickfixes to the code base by right clicking on "workshop" at the top of the hierarchy and clicking on "Apply all guickfixes".
-
+. You can also apply all the quickfixes to the code base by right clicking on "workshop" at the top of the hierarchy and clicking on "Apply all guickfixes".
++
 image::mtr-vscode-5.png[migration,400]
-
++
 Once you've completed the namespace changes, there is one more minor code change to make:
 
-*Step 6.8:* Open `/projects/summit-lab-eap-rhsi/app/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java` and change
-
+. Open `/projects/summit-lab-eap-rhsi/app/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java` and change
++
 [source,java]
 ----
 @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")
 ----
-
++
 to 
++
 [source,java,role="copypaste"]
 ----
 @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "jakarta.jms.Topic"),
 ----
-
++
 We can now run the code analysis again, 
 
-*Step 6.9:* To perform the code analysis, click on the start button as shown below
-
+. To perform the code analysis, click on the start button as shown below
++
 image::mtr-vscode-3.png[migration,400]
-
++
 Once the analysis is complete, you should see a file hierarchy updated.  
 
-*Step 6.10:* At the top of the file hierarchy is a report icon (in green).  Click on this to view the HTML version of the report.
-
+. At the top of the file hierarchy is a report icon (in green).  Click on this to view the HTML version of the report.
++
 image::mtr-results2.png[mtr-results2,80%]
-
++
 You should see the story points are now reduced to 16.
 
-In the Analysis results tree click on "persistence.xml".  
-
+. In the Analysis results tree click on "persistence.xml".  
++
 Change
-
++
 [source,xml]
 ----
 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 ----
-
++
 to 
-
++
 [source,xml,role="copypaste"]
 ----
 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
 ----
 
-Open the pom.xml file and make the following changes
-
+. Open the pom.xml file and make the following changes
++
 Change 
-
++
 [source,xml]
 ----
         <dependency>
@@ -65,9 +66,9 @@ Change
             <scope>provided</scope>
         </dependency>
 ----
-
++
 to
-
++
 [source,xml,role="copypaste"]
 ----
         <dependency>
@@ -76,9 +77,9 @@ to
             <scope>provided</scope>
         </dependency>
 ----
-
++
 Change
-
++
 [source,xml]
 ----
             <dependency>
@@ -90,7 +91,7 @@ Change
             </dependency>
 ----
 to 
-
++
 [source,xml,role="copypaste"]
 ----
             <dependency>
@@ -102,7 +103,7 @@ to
             </dependency>
 ----
 Change
-
++
 [source,xml]
 ----
 
@@ -112,9 +113,9 @@ Change
             <scope>provided</scope>
         </dependency>
 ----
-
++
 to
-
++
 [source,xml,role="copypaste"]
 ----
         <dependency>
@@ -123,9 +124,9 @@ to
             <scope>provided</scope>
         </dependency>
 ----
-
++
 Change
-
++
 [source,xml]
 ----
 
@@ -135,9 +136,9 @@ Change
             <scope>provided</scope>
         </dependency>
 ----
-
++
 to
-
++
 [source,xml,role="copypaste"]
 ----
         <dependency>
@@ -146,9 +147,9 @@ to
             <scope>provided</scope>
         </dependency>
 ----
-
++
 Change
-
++
 [source,xml]
 ----
 
@@ -158,9 +159,9 @@ Change
             <scope>provided</scope>
         </dependency>
 ----
-
++
 to
-
++
 [source,xml,role="copypaste"]
 ----
         <dependency>
@@ -169,9 +170,9 @@ to
             <scope>provided</scope>
         </dependency>
 ----
-
++
 Change
-
++
 [source,xml]
 ----
 
@@ -181,9 +182,9 @@ Change
             <scope>provided</scope>
         </dependency>
 ----
-
++
 to
-
++
 [source,xml,role="copypaste"]
 ----
         <dependency>
@@ -192,66 +193,65 @@ to
             <scope>provided</scope>
         </dependency>
 ----
-
-
++
 Change
- 
++
 [source,xml]
 ----
 <version.server.bom>7.4.0.GA</version.server.bom>
 ----
-
++
 to
-
++
 [source,xml,role="copypaste"]
 ----
 <version.server.bom>8.0.0.GA-redhat-00009</version.server.bom>
 ----
 
-In the Analysis results tree click on "beans.xml
-".  
-
+. In the Analysis results tree click on "beans.xml".  
++
 Change
-
++
 [source,xml]
 ----
 https://jakarta.ee/xml/ns/jakartaee/beans_1_1.xsd"
 ----
-
++
 to 
-
++
 [source,xml,role="copypaste"]
 ----
 https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
 ----
 
 
-*Step 6.9:* Alternatively you can copy these files from a pre-prepared JBoss EAP 8.0 version of the app in the /projects/summit-lab-eap-rhsi/eap8-app folder by running the following commands.
-
+. Alternatively you can copy these files from a pre-prepared JBoss EAP 8.0 version of the app in the /projects/summit-lab-eap-rhsi/eap8-app folder by running the following commands.
++
 [source,sh,role="copypaste"]
 ----
 cp /projects/eap-rhsi-lab/coolstore-eap8/pom.xml /projects/eap-rhsi-lab/coolstore
 ----
-
++
 Before we build our app, we're going to make a small update to the ui.
 
-Open the file `/projects/eap-rhsi-lab/coolstore/src/main/webapp/partials/header.html` 
-
+. Open the file `/projects/eap-rhsi-lab/coolstore/src/main/webapp/partials/header.html` 
++
 Change line 43 from:
-
++
 [source,java]
 ----
 <a ng-href="#/" class="active">EAP7 Cool Store</a>
 ----
-
++
 to 
++
 [source,java,role="copypaste"]
 ----
 <a ng-href="#/" class="active">EAP8 Cool Store</a>
 ----
 
-*Step 6.10:* We can now build our JBoss EAP 8.0 application
-
+. We can now build our JBoss EAP 8.0 application
++
 [source,sh,role="copypaste"]
 ----
 cd /projects/eap-rhsi-lab/coolstore && mvn clean package

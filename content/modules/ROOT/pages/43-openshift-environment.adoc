@@ -9,12 +9,12 @@ Red Hat have developed a lot of tools to provision Red Hat Application services 
 
 In this lab, we're going to use these tools to simplify the deployment of our application on OpenShift.
 
-== Red Hat Build of Keycloak configuration
+== 1. Red Hat Build of Keycloak configuration
 
 We've already deployed an instance of Red Hat Build of Keycloak using the Red Hat Build of Keycloak operator, this is configured and ready to use. Before we deploy the application to OpenShift we need to verify the Red Hat Build of Keycloak configuration and push our changes to our individual gitea account.
 
-*Step 3.1:* In the IDE, open the file: coolstore/src/main/webapp/keycloak.json and ensure the contents are as follows:
-
+. In the IDE, open the file: coolstore/src/main/webapp/keycloak.json and ensure the contents are as follows:
++
 [source,json,role="copypaste"]
 ----
 {
@@ -28,62 +28,60 @@ We've already deployed an instance of Red Hat Build of Keycloak using the Red Ha
 }
 ----
 
-*Step 3.2:* Click on the "Source Control" icon in the IDE, you should see the following:
-
+. Click on the "Source Control" icon in the IDE, you should see the following:
++
 image::git-1.png[source-contol]
-
++
 Enter a commit message in the message field and click on the "Commit" button.
 
-*Step 3.2:* You will be prompted to stage files to the commit
-
+. You will be prompted to stage files to the commit
++
 image::git-2.png[stage-files]
-
++
 Click on "Yes" and then click on "Sync Changes" to push your changes to gitea
 
-*Step 3.3:* You will be prompted to enter a username:
-
+. You will be prompted to enter a username:
++
 image::git-3.png[git-username]
-
++
 Enter `{USER_ID}`
 
-*Step 3.4:* You will then be prompted for a password:
-
+. You will then be prompted for a password:
++
 Enter `password`
-
++
 Your changes will be pushed to gitea.
 
-## Deploying on OpenShift
+## 2. Deploying on OpenShift
 
-*Step 3.5:* Access the OpenShift console by clicking on the following {openshift_console_url}[link^] 
-
+. Access the OpenShift console by clicking on the following {openshift_console_url}[link^] 
++
 Login with the following credentials:
-
++
 * *Username*: `{USER_ID}`
 * *Password*: `openshift`
 
-*Step 3.6: Switch to the project called "{USER_ID}-project"*
+. Switch to the project called "{USER_ID}-project"*
 
-## Create a secret for the PostgreSQL database
-
-*Step 3.7:* Within this project, add a PostgreSQL secret by running the following from the terminal
-
+. Within this project, add a PostgreSQL secret by running the following from the terminal
++
 [source,sh,role="copypaste"]
 ----
 oc create secret generic postgresql --from-literal database-password=postgresPW --from-literal database-user=postgresUser -n {USER_ID}-project 
 ----
 
-## Deploy an AMQ broker instance
+## 3. Deploy an AMQ broker instance
 
 Our application will require an external message queue.  We'll use the AMQ Broker operator to deploy and configure an AMQ broker instance
 
-*Step 3.10:* Click on "+Add" and select "Operator Backed"
-
+. Click on "+Add" and select "Operator Backed"
++
 From the list below, select "ActiveMQ Artemis"
-
++
 image::operator-backed.png[operator-backed,80%]
 
-*Step 3.11:* From the next screen, click on "Create" and then paste the following YAML into the "YAML view" editor
-
+. From the next screen, click on "Create" and then paste the following YAML into the "YAML view" editor
++
 [source,yaml,role="copypaste"]
 ----
 apiVersion: broker.amq.io/v1beta1
@@ -107,13 +105,13 @@ spec:
   console:
     expose: true
 ----
-
++
 Next, we're going to create an "AMQ Artemis Address"
 
-*Step 3.12:* Click on "+Add" again, select "Operator Backed" and then choose "AMQ Artemis Address"
+. Click on "+Add" again, select "Operator Backed" and then choose "AMQ Artemis Address"
 
-*Step 3.13:* From the next screen, click on "Create" and then paste the following YAML into the "YAML view" editor
-
+. From the next screen, click on "Create" and then paste the following YAML into the "YAML view" editor
++
 [source,yaml,role="copypaste"]
 ----
 apiVersion: broker.amq.io/v1beta1
@@ -125,11 +123,11 @@ spec:
   queueName: topic/orders
   routingType: multicast
 ----
-
++
 This config map contains non-sensitive information relating to the PostgreSQL connection and AMQ broker connection such as the database service host and database name, the AMQ broker service host and topic names.  Sensitive information such as username / password will be pulled from the secrets created when these services where deployed.
 
-*Step 3.16:* To create the config map, click on "ConfigMaps" on the left menu and click on "Create ConfigMap".  From the "Create ConfigMap" page, select "YAML view" and paste the following text:
-
+. To create the config map, click on "ConfigMaps" on the left menu and click on "Create ConfigMap".  From the "Create ConfigMap" page, select "YAML view" and paste the following text:
++
 [source,yaml,role="copypaste"]
 ----
 kind: ConfigMap
