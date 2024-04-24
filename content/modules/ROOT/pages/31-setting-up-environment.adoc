@@ -24,29 +24,24 @@ oc project {USER_ID}-project
 Using project "{USER_ID}-project" on server
 ----
 
-. Since we'll be using multiple terminal sessions in this exercise (one for OpenShift and other for the VM). Let's rename this terminal tab to avoid confusion. Click on the `bash` icon as show below and select `Rename`option
+. Since we'll be using multiple terminal sessions in this exercise (one for OpenShift and other for the VM). Let's split the terminal into two windows
 +
 
-image::rhsi-rename-ocp.png[rhsi-rename-ocp]
+image::split-terminal.png[split-terminal]
 
 
-. Rename it to `OCP` and hit enter
+. Right click on the first terminal name and select "Rename..."
 +
 
-image::rhsi-enter-ocp.png[rhsi-enter-ocp]
+image::rename-terminal.png[rhsi-enter-ocp]
 
-. Your terminal should look something like this
+. Enter "OCP". Your terminal should look something like this
 +
 
 image::rhsi-only-ocp-terminal.png[rhsi-only-ocp-terminal]
 
-== 2. Logging into the VM using devspaces terminal
-. Create a new terminal window to log into the VM by clicking the split terminal icon
-+
 
-image::rhsi-split-terminal.png[rhsi-split-terminal]
-
-. Rename newly created terminal window (the one to the right). Right click on the `bash` icon as show below and select `Rename`option
+. Rename the second terminal window (the one named "bash"). Right click on the `bash` icon as show below and select `Rename`option
 +
 
 image::rhsi-rename-vm.png[rhsi-rename-vm]
