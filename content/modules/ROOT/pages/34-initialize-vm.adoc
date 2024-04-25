@@ -13,7 +13,7 @@ image::rhsi-vm-terminal.png[rhsi-vm-terminal]
 +
 [source,sh,role="copypaste",subs=attributes+]
 ----
- wget -O - https://raw.githubusercontent.com/RedHat-Middleware-Workshops/summit-eap-rhsi-lab-sample-app/main/skupper/install.sh | bash
+ curl https://skupper.io/install.sh | sh -s -- --version 1.5.3
 ----
 
 . Switch the skupper cli podman site mode as we will be using podman to run our skupper containers

@@ -180,7 +180,7 @@ image::helm-charts.png[migration,80%]
 [source,yaml,role="copypaste"]
 ----
 build:
- uri: 'http://gitea.gitea.svc.cluster.local:3000/{USER_ID}/summit-eap-rhsi-lab-sample-app'
+ uri: 'http://gitea.gitea.svc.cluster.local:3000/user1/summit-eap-rhsi-lab-sample-app'
  ref: main
  contextDir: coolstore
  env:
@@ -263,7 +263,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: coolstore8
-  namespace: {USER_ID}-project
+  namespace: user1-project
   labels:
     app.kubernetes.io/managed-by: eap-operator
     app.kubernetes.io/name: eap8
