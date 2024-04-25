@@ -286,4 +286,8 @@ Switching back to the topology view should show a screen similar to the followin
 +
 image::eap8-ocp.png[migration,80%]
 
+. We should now be able to access our JBoss EAP 8.0 application on OpenShift by clicking on the external route icon.  
++
+image::coolstore.png[coolstore,80%]
+
 We've now completed the migration of our JBoss EAP 8.0 application to OpenShift.

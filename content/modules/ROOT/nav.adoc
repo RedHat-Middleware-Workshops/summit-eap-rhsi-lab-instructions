@@ -27,6 +27,4 @@
 
 ** xref:44-deployment.adoc[4.4 Deploying the EAP 8.0 application on OpenShift]
 
-** xref:45-summary.adoc[4.5 Summary]
-
 * xref:05-summary.adoc[5.0 Workshop Summary]
