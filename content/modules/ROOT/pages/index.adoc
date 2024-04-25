@@ -4,7 +4,7 @@ A customer is embarking on a modernization and cloud migration project, they've 
 In this scenario we will be migrating an e-commere store which consists of four components:
 
 
-* A JBoss EAP 7.4 application, this is the e-commerce application frontend and backend.
+* A JBoss EAP 7.4 application, this is the ecommerce application frontend and backend.
 * A message queue, currently provided by the JBoss EAP Application Platform
 * An instance of Red Hat Build of Keycloak for authentication
 * A PostgreSQL database

@@ -177,10 +177,10 @@ image::helm-charts.png[migration,80%]
 
 . Paste the following YAML:
 +
-[source,yaml,role="copypaste"]
+[source,yaml,role="copypaste",subs=attributes+]
 ----
 build:
- uri: 'http://gitea.gitea.svc.cluster.local:3000/user1/summit-eap-rhsi-lab-sample-app'
+ uri: 'http://gitea.gitea.svc.cluster.local:3000/{USER_ID}/summit-eap-rhsi-lab-sample-app'
  ref: main
  contextDir: coolstore
  env:

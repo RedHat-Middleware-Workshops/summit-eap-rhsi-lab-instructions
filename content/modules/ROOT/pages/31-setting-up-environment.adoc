@@ -7,23 +7,6 @@
 +
 image::open-terminal.png[open-terminal]
 
-+
-. *Switch to the project called "{USER_ID}-project"*
-+
-
-[source,sh,role="copypaste",subs=attributes+]
-----
-oc project {USER_ID}-project
-----
-
-. You should see an output similar to the one below
-+
-
-[source,sh,role="copypaste",subs=attributes+]
-----
-Using project "{USER_ID}-project" on server
-----
-
 . Since we'll be using multiple terminal sessions in this exercise (one for OpenShift and other for the VM). Let's split the terminal into two windows
 +
 
@@ -50,11 +33,6 @@ image::rhsi-rename-vm.png[rhsi-rename-vm]
 +
 
 image::rhsi-enter-vm.png[rhsi-enter-vm]
-
-. Your terminal should look something like this
-+
-
-image::rhsi-terminal.png[rhsi-terminal]
 
 . Login to the VM using this newly created terminal tab+
 +
