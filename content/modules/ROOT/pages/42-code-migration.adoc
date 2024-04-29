@@ -4,7 +4,7 @@ Now that we've performed the analysis of our code to determine the changes neede
 
 == 1. Automated file changes
 
-. You can also apply all the quickfixes to the code base by right clicking on "workshop" at the top of the hierarchy and clicking on "Apply all guickfixes".
+. You can also apply all the quickfixes to the code base by right clicking on "workshop" at the top of the hierarchy and clicking on "Apply all quickfixes".
 +
 image::mtr-vscode-5.png[migration,400]
 +
