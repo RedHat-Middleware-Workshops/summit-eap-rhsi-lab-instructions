@@ -4,7 +4,7 @@ To create a link between the environments, you create a token on one of the envi
 
 ## 1. Create a token from RHSI on OpenShift
 
-. Make sure you are on the OCP terminal
+. Make sure you are on the *OCP terminal*
 +
 image::rhsi-ocp-terminal.png[rhsi-ocp-terminal]
 
@@ -42,7 +42,7 @@ Open the newly-created `token.yaml` file in DevSpaces by clicking on it on the l
 
 ## 2. Create link on the VM with the token
 
-. In the OCP Terminal, run the following command to copy this token file to the VM into the home directory for `lab-user`:
+. In the *OCP Terminal*, run the following command to copy this token file to the VM into the home directory for `lab-user`:
 +
 [source,sh,role="copypaste",subs=attributes+]
 ----
@@ -51,7 +51,7 @@ scp token.yaml {bastion_ssh_user_name}@{bastion_public_hostname}:secret.token
 +
 You will need to supply the same VM password as before: `{bastion_ssh_password}`
 
-. Create a link on the VM using the token by running this command on the VM terminal:
+. Create a link on the VM using the token by running this command on the *VM terminal*:
 +
 [source,sh,role="copypaste",subs=attributes+]
 ----
@@ -78,7 +78,7 @@ The circles depicting the environments might overlap each other sometimes and he
 ====
 
 
-. Finally, you need to expose the database running on the VM over the link. This will allow the database to be accessed from the openshift cluster as if it was a local service.
+. Finally, you need to expose the database running on the VM over the link. This will allow the database to be accessed from the openshift cluster as if it was a local service. In the *VM terminal* enter:
 +
 [source,sh,role="copypaste",subs=attributes+]
 ----
@@ -111,7 +111,7 @@ spec:
       targetPort: 1025
 ----
 
-. Create the service
+. Create the service by running the following in the *OCP terminal*
 +
 [source,sh,role="copypaste",subs=attributes+]
 ----

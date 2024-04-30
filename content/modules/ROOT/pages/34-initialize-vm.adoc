@@ -5,7 +5,7 @@ We'll be using the CLI to initialize Red Hat Service Interconnect on the VM.
 
 ## 1. Deploying Red Hat Service Interconnect on VM
 
-. Go to the terminal on the devspaces where you are logged in to the VM.
+. Go to the *VM terminal* on the devspaces where you are logged in to the VM.
 +
 image::rhsi-vm-terminal.png[rhsi-vm-terminal]
 
@@ -30,7 +30,7 @@ export SKUPPER_PLATFORM=podman
 skupper switch
 ----
 
-. Initialize the Service Interconnect Router by issuing the below command in the VM terminal.
+. Initialize the Service Interconnect Router by issuing the below command in the *VM terminal*.
 +
 [source,sh,role="copypaste",subs=attributes+]
 ----

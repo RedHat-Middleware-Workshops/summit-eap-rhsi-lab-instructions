@@ -10,7 +10,7 @@ image::mtr-vscode-5.png[migration,400]
 +
 Once you've completed the namespace changes, there is one more minor code change to make:
 
-. Open `/projects/summit-lab-eap-rhsi/app/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java` and change
+. Open `/projects/eap-rhsi-lab/coolstore/app/src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java` and change
 +
 [source,java]
 ----

@@ -47,7 +47,7 @@ Enter `{USER_ID}`
 
 . You will then be prompted for a password:
 +
-Enter `password`
+Enter `openshift`
 +
 Your changes will be pushed to gitea.
 

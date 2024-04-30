@@ -22,7 +22,7 @@ oc project {USER_ID}-project
 cd /projects/eap-rhsi-lab
 ----
 
-. Create a config file with the name `mysite.yaml` by right-clicking on the top-level `summit-lab-eap-rhsi` folder and choosing "New File..." and name it `mysite.yaml`:
+. Create a config file with the name `mysite.yaml` by right-clicking on the top-level `eap-rhsi-lab` folder and choosing "New File..." and name it `mysite.yaml`:
 +
 image::rhsi-newfile.png[rhsi-newfile]
 
@@ -42,7 +42,7 @@ data:
   flow-collector: "true"
 ----
 
-. Initialize the Service Interconnect Router by issuing the below command in the OCP terminal. This should install the Service Interconnect resources in the namespace
+. Initialize the Service Interconnect Router by issuing the below command in the *OCP terminal*. This should install the Service Interconnect resources in the namespace
 +
 [source,sh,role="copypaste",subs=attributes+]
 ----
