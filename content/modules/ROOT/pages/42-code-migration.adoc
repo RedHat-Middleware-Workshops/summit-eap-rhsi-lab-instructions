@@ -36,7 +36,7 @@ Once the analysis is complete, you should see a file hierarchy updated.
 +
 image::mtr-results2.png[mtr-results2,80%]
 +
-You should see the story points are now reduced to 16.
+You should see the story points are now reduced to 10.
 
 . In the Analysis results tree click on "persistence.xml".  
 +
@@ -231,6 +231,22 @@ https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
 ----
 cp /projects/eap-rhsi-lab/coolstore-eap8/pom.xml /projects/eap-rhsi-lab/coolstore
 ----
+
+. We can now run the code analysis again, 
++
+To perform the code analysis, click on the start button as shown below
++
+image::mtr-vscode-3.png[migration,400]
++
+Once the analysis is complete, you should see a file hierarchy updated.  
+
+. At the top of the file hierarchy is a report icon (in green).  Click on this to view the HTML version of the report.
++
+image::mtr-results3.png[mtr-results2,80%]
++
+You should see the story points are now reduced to 2.
++
+If we drill down to these issues we should see the only mandatory change is to rename keycloak.json to oidc.json.  As we're using a client library for keycloak connectivity we can ignore this change.
 +
 Before we build our app, we're going to make a small update to the ui.
 
@@ -250,7 +266,7 @@ to
 <a ng-href="#/" class="active">EAP8 Cool Store</a>
 ----
 
-. We can now build our JBoss EAP 8.0 application
+. We can now build our JBoss EAP 8.0 application.  From the terminal run:
 +
 [source,sh,role="copypaste"]
 ----

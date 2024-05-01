@@ -117,3 +117,4 @@ spec:
 ----
 oc apply -f skupper-service.yaml
 ----
+. We can now close the *VM Terminal* by entering "exit" twice.
